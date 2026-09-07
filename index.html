@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>私のホームページ</title>
+    
+    <style>
+        /* 🌊 1. 背景を海水サイバー風にするCSS */
+        body {
+            background: radial-gradient(circle, #011627 0%, #000308 100%);
+            background-attachment: fixed;
+            color: #4fc3f7;
+            font-family: 'Courier New', Courier, 'Hiragino Kaku Gothic ProN', monospace;
+            line-height: 1.8;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 📡 水中のグリッド（格子模様） */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                linear-gradient(rgba(0, 150, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 150, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ⚡ 走査線（スキャンライン） */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%);
+            background-size: 100% 4px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #00e5ff;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.6), 0 0 20px rgba(0, 229, 255, 0.3);
+            border-bottom: 2px solid #00e5ff;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        p.intro-text {
+            background: rgba(0, 15, 30, 0.7);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.1);
+            color: #b3e5fc;
+        }
+
+        /* 📷 写真表示エリアの設定 */
+        .photo-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            border: 1px solid #00e5ff;
+            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+            overflow: hidden;
+            background-color: #011627;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .message-trigger {
+            flex: 1;
+            min-width: 150px;
+            max-width: 250px;
+            padding: 15px 10px;
+            background: #001829;
+            color: #00e5ff;
+            border: 1px solid #00e5ff;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .message-trigger:hover {
+            background: #00e5ff;
+            color: #000000;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.8);
+        }
+
+        .message-content {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease-out, opacity 0.4s ease;
+            background: rgba(0, 5, 10, 0.9);
+            border: 1px dashed #00e5ff;
+            color: #00e5ff;
+            padding: 0 20px;
+            border-radius: 4px;
+            margin-top: 15px;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+        }
+
+        .message-content.show {
+            opacity: 1;
+            padding: 20px;
+        }
+
+        .message-content h3 {
+            border-left: 4px solid #00e5ff;
+            padding-left: 10px;
+            margin-top: 0;
+            color: #00e5ff;
+        }
+
+        .link-button {
+            display: inline-block;
+            margin-top: 30px;
+            color: #00e5ff;
+            text-decoration: none;
+            border-bottom: 1px solid #00e5ff;
+            padding-bottom: 2px;
+        }
+
+        .link-button:hover {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+
+        #data-particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            font-family: monospace;
+            font-size: 12px;
+            color: rgba(0, 229, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="data-particles"></div>
+
+    <h1>[SYS_LOAD_SHIROSATO_PC_CLUB]</h1>
+
+    <p class="intro-text">> STATUS: 毎週月曜日週１で活動中</p>
+    <p class="intro-text">> MEMBER: 1年生5人、2年生1人、顧問3人 （メインの情報の顧問は1人）</p>
+    <p class="intro-text">> ENTRY: パソコン未経験者、興味のある方、大好きな方、得意な方、ゲーム好きな方大歓迎！！（部長も元々未経験）</p>
+    <p class="intro-text">> ACTIVITY: 普段はタイピング、プログラミングなど各自でやりたいことをやっている。わからないことは顧問が教えてくれるから安心！</p>
+    <p class="intro-text">> EVENT: 文化祭では日頃手掛けた作品を発表したり、ラジコンで遊んだり、スイッチなどのテレビゲームをしたりします！</p>
+    
+    <p class="intro-text">> GALLERY: パソコン部の日常</p>
+    
+    <!-- 📷 画像データを直接埋め込み（別フォルダ・別ファイル参照不要） -->
+    <div class="photo-container">
+        <img src="pc.JPG" alt="パソコン部の活動風景">
+    </div>
+
+    <div class="button-container">
+        <button class="message-trigger" onclick="showContent('msg1')">[ACCESS_DIR_1] 部長から</button>
+        <button class="message-trigger" onclick="showContent('msg2')">[ACCESS_DIR_2] 顧問から</button>
+    </div>
+
+    <div id="msg1" class="message-content">
+        <h3>DEPT_HEAD_MESSAGE (部長より)</h3>
+        <p>「パソコン部って固いイメージがあるかもしれませんが、城郷のパソコン部はめちゃくちゃ自由で気楽な部活です！
+普段は自分のやりたい作品作りに黙々と集中していますが、中間発表ではお互いの作品褒め合ったりと、メリハリをつけて活動しています。作品が全然進んでいなくてもまったく問題ないゆるさなので安心してください！
+作業以外にも学校の課題を終わらせたり、ただ遊びに行くだけでもOKです！！顧問含め部員同士全員仲が良く、居心地の良い部活です。ぜひ気軽に一度見学に来てください！」</p>
+    </div>
+
+    <div id="msg2" class="message-content">
+        <h3>ADVISOR_MESSAGE (顧問より)</h3>
+        <p>「パソコン部では、ゲーム制作、Android・iOS向けアプリ開発、Webページ制作、ドローン操縦など、さまざまな分野に挑戦しています。
+「プログラミングに興味がある」「ものづくりが好き」「ドローンを飛ばしてみたい」――そんな気持ちがあれば大歓迎です。経験の有無は問いません。初心者でも基礎から学び、自分のペースで技術を身につけることができます。
+文化祭では、部員が制作したゲームやアプリ、Webページなどの作品展示や体験企画を行っています。仲間と協力しながら、自分のアイデアを形にする楽しさをぜひ体験してください。
+「好き」を「得意」に変えられる場所が、パソコン部にはあります。ぜひ一度、見学に来てください。部員一同、お待ちしています！」</p> 
+    </div>
+
+    <br>
+    <a href="https://www.pen-kanagawa.ed.jp/shirosato-h/seikatsu/club/pc.html" class="link-button">>> CONNECT TO OFFICIAL SITE</a>
+
+    <script>
+        function showContent(messageId) {
+            var allMessages = document.querySelectorAll('.message-content');
+            
+            allMessages.forEach(function(msg) {
+                if (msg.id === messageId) {
+                    if (msg.classList.contains('show')) {
+                        msg.classList.remove('show');
+                        msg.style.maxHeight = '0px';
+                    } else {
+                        msg.classList.add('show');
+                        msg.style.maxHeight = (msg.scrollHeight + 40) + 'px'; 
+                    }
+                } else {
+                    msg.classList.remove('show');
+                    msg.style.maxHeight = '0px';
+                }
+            });
+        }
+
+        const bgContainer = document.getElementById('data-particles');
+        const dataChars = ["0", "1", "01", "1001", "C++", "HTML", "JS", "SYS_OK", "NULL", "0x3F", "0xFF", "SEA_LEVEL", "PORT_80"];
+        
+        function createDataStream() {
+            const el = document.createElement('div');
+            el.style.position = 'absolute';
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.top = Math.random() * 100 + 'vh';
+            el.innerText = dataChars[Math.floor(Math.random() * dataChars.length)];
+            bgContainer.appendChild(el);
+            setTimeout(() => { el.remove(); }, 3000);
+        }
+        setInterval(createDataStream, 150);
+    </script>
+
+</body>
+</html>
