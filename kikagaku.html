@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+ <html>
+  <head>
+   <style>
+    body { margin: 0; overflow: hidden; background: #05050a; }
+    canvas { display: block; }
+   </style>
+  </head>
+  <body>
+   <canvas id="myCanvas"></canvas>
+
+   <script>
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight
+
+    const SIZE = 200;
+    let time = 0;
+
+    function draw(value) {
+        const bgGrad = ctx.createRadialGradient(
+        canvas.width / 2, canvas.height / 2, 10,
+        canvas.width / 2, canvas.height / 2, Math.max(canvas.width, canvas.height)
+      );
+      bgGrad.addColorStop(0, '#121226');
+      bgGrad.addColorStop(1, '#05050a');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          const hue = (time * 25) % 360;
+          ctx.shadowBlur = 18;
+          ctx.shadowColor = `hsl(${hue}, 100%, 55%)`;
+          ctx.strokeStyle = `hsl(${hue}, 100%, 75%)`;
+          ctx.lineWidth = 2.5;
+          ctx.lineJoin = 'round';
+          ctx.lineCap = 'round';
+      ctx.beginPath();
+
+      if (value.length >= 2) {
+          ctx.moveTo(canvas.width / 2 + value[0] * SIZE, canvas.height / 2 + value[1] * SIZE);
+          for (let i = 1; i < value.length / 2; i += 1) {
+              ctx.lineTo(canvas.width / 2 + value[2 * i] * SIZE, canvas.height / 2 + value[2 * i + 1] * SIZE);
+          }
+      }
+
+      ctx.stroke();
+   }
+
+    function add() {
+      const value = [];
+      time += 0.01;
+
+      const k = 2 + (Math.sin(time)) * 2; 
+
+      for (let i = 0; 361 > i; i += 1) {
+        const rad = i * (Math.PI / 180);
+
+        const x = Math.sin(rad * k);
+        const y = Math.cos(rad * 3);
+
+        value.push(x);
+        value.push(y);
+     }
+      draw(value);
+
+      requestAnimationFrame(add);
+   }
+
+    function handleResize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+   }
+
+    window.addEventListener('resize', handleResize);
+
+    handleResize();
+    add();
+   </script>
+  </body>
+ </html>
